@@ -1,5 +1,5 @@
-import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client'
-import {createGlobalStyle, ThemeProvider} from 'styled-components'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import type { AppProps } from 'next/app'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -17,7 +17,24 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
 const client = new ApolloClient({
   uri: '/api/graphql',
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          feeed: {
+            // Don't cache separate results based on
+            // any of this field's arguments.
+            keyArgs: false,
+            // Concatenate the incoming list items with
+            // the existing list items.
+            merge(existing = [], incoming) {
+              return [...existing, ...incoming];
+            },
+          }
+        }
+      }
+    }
+  }),
 })
 
 const theme = {

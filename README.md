@@ -82,3 +82,5 @@ The database is already included in the repo (`db.sqlite`) and populated (`scrip
 - `projects` — projects that founders are working on (connected to `users` through `user_projects`);
 - `announcements` — announcements by On Deck Team targeting specific fellowships or global (`fellowship = "all"`).
   
+
+# https://www.apollographql.com/blog/graphql/filtering/how-to-search-and-filter-results-with-graphql/
