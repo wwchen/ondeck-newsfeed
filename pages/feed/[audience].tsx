@@ -69,9 +69,9 @@ export default function FeedPage() {
       variables: { audience: String(query.audience) },
     }
   )
-  const users = data?.users;
+  const feed = data?.feed;
 
-  if (!users || loading || error) {
+  if (!feed || loading || error) {
     return null
   }
 

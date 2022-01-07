@@ -1,5 +1,5 @@
 import db, { FeedEntry, UserRow } from '../../db'
-import projects from '../User/projects'
+import projects from './projects'
 import announcements from './announcements'
 import users from './users'
 
@@ -26,8 +26,7 @@ const audienceContent: Record<string, Record<string, string[]>> = {
   },
   'writers': {
     'announcement': ['all', 'writers'],
-    'user': ['writers'],
-    'project': []
+    'user': ['writers']
   }
 }
 
@@ -44,9 +43,9 @@ export default async function feed(parent: unknown, { audience }: Args): Promise
   if (content['announcement']) {
     promises.push(announcements(parent, { fellowships: content['announcement'] }))
   }
-  // if (content['project']) {
-  //   promises.push(projects(parent, { fellowships: content['project'] }))
-  // }
+  if (content['project']) {
+    promises.push(projects(parent, { fellowships: content['project'] }))
+  }
   const entries = (await Promise.all(promises)).flat()
   return entries.sort((a, b) => b.created_ts.getTime() - a.created_ts.getTime())
 }
