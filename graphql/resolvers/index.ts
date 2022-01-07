@@ -1,5 +1,4 @@
-export * as User from './User'
 export * as Project from './Project'
+export * as User from './User'
 export * as Query from './Query'
-export * as Announcement from './Announcement'
 export * as FeedEntry from './FeedEntry'

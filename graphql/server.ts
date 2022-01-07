@@ -2,12 +2,25 @@ import { ApolloServer, gql } from 'apollo-server-micro'
 import * as resolvers from './resolvers'
 
 const typeDefs = gql`
+  scalar Date
+
+  type Announcement {
+    id: Int!
+    fellowship: String!
+    title: String!
+    body: String!
+    created_ts: Date!
+    updated_ts: Date!
+  }
+  
   type Project {
     id: Int!
     name: String!
     description: String!
     icon_url: String!
     users: [User!]!
+    created_ts: Date!
+    updated_ts: Date!
   }
 
   type User {
@@ -17,13 +30,8 @@ const typeDefs = gql`
     avatar_url: String!
     fellowship: String!
     projects: [Project!]!
-  }
-
-  type Announcement {
-    id: Int!
-    fellowship: String!
-    title: String!
-    body: String!
+    created_ts: Date!
+    updated_ts: Date!
   }
 
   union FeedEntry = User | Project | Announcement

@@ -32,16 +32,7 @@ const audienceContent: Record<string, Record<string, string[]>> = {
 }
 
 export default async function feed(parent: unknown, { audience }: Args): Promise<FeedEntry[]> {
-  // const user: UserRow = {
-  //   id: 1,
-  //   name: 'foo',
-  //   bio: 'bio',
-  //   avatar_url: 'so',
-  //   fellowship: 'founders',
-  //   created_ts: new Date(),
-  //   updated_ts: new Date()
-  // }
-  // return [user]
+  // todo add pagination
   const content = audienceContent[audience]
   if (!content) {
     throw new Error(`no available feed for ${audience}`)
@@ -57,6 +48,5 @@ export default async function feed(parent: unknown, { audience }: Args): Promise
   //   promises.push(projects(parent, { fellowships: content['project'] }))
   // }
   const entries = (await Promise.all(promises)).flat()
-  // todo sort and filter. add 'date' scalar to sort
-  return entries
+  return entries.sort((a, b) => b.created_ts.getTime() - a.created_ts.getTime())
 }

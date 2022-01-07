@@ -12,5 +12,9 @@ export default async function users(parent: unknown, { fellowships }: Args): Pro
   if (!users) {
     throw new Error(`Users not found`)
   }
+  users.map(e => {
+    e.created_ts = new Date(e.created_ts)
+    e.updated_ts = new Date(e.updated_ts)
+  })
   return users
 }

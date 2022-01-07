@@ -62,4 +62,4 @@ export type AnnouncementRow = {
   updated_ts: Date;
 }
 
-export type FeedEntry = AnnouncementRow | ProjectRow | UserRow
+export type FeedEntry = { created_ts: Date, updated_ts: Date } & (AnnouncementRow | ProjectRow | UserRow)
