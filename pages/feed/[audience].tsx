@@ -41,11 +41,12 @@ type QueryVars = {
 
 export default function FeedPage() {
   const { query } = useRouter()
+  const audience = String(query.audience)
 
   const { data, error, loading } = useQuery<QueryData, QueryVars>(
     FEED_QUERY,
     {
-      variables: { audience: String(query.audience) },
+      variables: { audience },
     }
   )
   const feed = data?.feed;
@@ -56,7 +57,7 @@ export default function FeedPage() {
 
   return (
     <Layout>
-      <Feed entries={feed} />
+      <Feed audience={audience} entries={feed} />
     </Layout>
   )
 }

@@ -1,6 +1,5 @@
 import * as t from '../types/feed'
 import styled from 'styled-components'
-import Card from './Card'
 import Markdown from './Markdown'
 
 type Props = {
@@ -9,17 +8,15 @@ type Props = {
 
 export default function FeedEntryProject({ project }: Props) {
   return (
-    <Card>
-      <Columns>
-        <ColumnLeft>
-          <Icon src={project.icon_url} />
-        </ColumnLeft>
-        <ColumnRight>
-          <h2>{project.name}</h2>
-          <Markdown>{project.description}</Markdown>
-        </ColumnRight>
-      </Columns>
-    </Card>
+    <Columns>
+      <ColumnLeft>
+        <Icon src={project.icon_url} />
+      </ColumnLeft>
+      <ColumnRight>
+        <h2>{project.name}</h2>
+        <Markdown>{project.description}</Markdown>
+      </ColumnRight>
+    </Columns>
   )
 }
 

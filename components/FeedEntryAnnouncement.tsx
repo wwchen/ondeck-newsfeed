@@ -1,6 +1,4 @@
 import * as t from '../types/feed'
-import styled from 'styled-components'
-import Card from './Card'
 import Markdown from './Markdown'
 
 type Props = {
@@ -9,10 +7,9 @@ type Props = {
 
 export default function FeedEntryAnnouncement({ announcement }: Props) {
   return (
-    <Card>
-      <h1>{announcement.title}</h1>
-      <i>{announcement.fellowship}</i>
+    <div>
+      <h2>{announcement.title}</h2>
       <Markdown>{announcement.body}</Markdown>
-    </Card>
+    </div>
   )
 }
