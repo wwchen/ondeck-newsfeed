@@ -5,7 +5,10 @@ import users from './users'
 
 type Args = {
   audience: string;
+  limit: number;
+  cursor?: Date;
 }
+
 type Fellowship = "founders" | "angels" | "writers"
 type ContentConfig = {
   'announcement'?: (Fellowship | "all")[],
@@ -36,22 +39,25 @@ const audienceContent: Record<Fellowship, ContentConfig> = {
   }
 }
 
-export default async function feed(parent: unknown, { audience }: Args): Promise<FeedEntry[]> {
-  // todo add pagination
+export default async function feed(parent: unknown, { audience, limit, cursor }: Args): Promise<FeedEntry[]> {
   const content = audienceContent[audience as Fellowship]
   if (!content) {
     throw new Error(`no available feed for ${audience}`)
   }
   const promises: Promise<FeedEntry[]>[] = []
   if (content.user) {
-    promises.push(users(parent, { fellowships: content.user }))
+    promises.push(users(parent, { fellowships: content.user, limit, cursor }))
   }
   if (content.announcement) {
-    promises.push(announcements(parent, { fellowships: content.announcement }))
+    promises.push(announcements(parent, { fellowships: content.announcement, limit, cursor }))
   }
   if (content.project) {
-    promises.push(projects(parent, { fellowships: content.project }))
+    promises.push(projects(parent, { fellowships: content.project, limit, cursor }))
   }
-  const entries = (await Promise.all(promises)).flat()
-  return entries.sort((a, b) => b.created_ts.getTime() - a.created_ts.getTime())
+  const entries = (await Promise.all(promises))
+    .flat()
+    .sort((a, b) => b.created_ts.getTime() - a.created_ts.getTime())
+    .slice(0, limit)
+
+  return entries
 }

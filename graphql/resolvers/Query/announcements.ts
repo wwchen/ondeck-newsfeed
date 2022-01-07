@@ -1,16 +1,15 @@
 import db, { AnnouncementRow } from '../../db'
+import { paginatedQuery } from './_querybuilder'
 
 type Args = {
-  fellowships: string[]
+  fellowships: string[];
+  limit: number;
+  cursor?: Date;
 }
 
-export default async function announcements(parent: unknown, { fellowships }: Args): Promise<AnnouncementRow[]> {
-  let query = `SELECT * FROM announcements`
+export default async function announcements(parent: unknown, { fellowships, limit, cursor }: Args): Promise<AnnouncementRow[]> {
+  const query = paginatedQuery('SELECT * FROM announcements', fellowships, limit, cursor)
 
-  if (fellowships) {
-    const options = fellowships.map(x => `'${x}'`).join(', ')
-    query += ` WHERE fellowship IN (${options})`
-  }
   const announcements: AnnouncementRow[] | undefined = await db.getAll(query)
   if (!announcements) {
     throw new Error(`Announcements not found`)

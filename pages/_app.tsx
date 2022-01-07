@@ -21,14 +21,24 @@ const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          feeed: {
-            // Don't cache separate results based on
-            // any of this field's arguments.
-            keyArgs: false,
-            // Concatenate the incoming list items with
-            // the existing list items.
-            merge(existing = [], incoming) {
-              return [...existing, ...incoming];
+          feed: {
+            keyArgs: ["__typename", "id"],
+            // While args.cursor may still be important for requesting
+            // a given page, it no longer has any role to play in the
+            // merge function.
+            merge(existing, incoming, { readField }) {
+              const merged = { ...existing };
+              incoming.forEach(item => {
+                const key = readField("__typename", item) + "-" + readField("id", item)
+                merged[key] = item;
+              });
+              return merged;
+            },
+
+            // Return all items stored so far, to avoid ambiguities
+            // about the order of the items.
+            read(existing) {
+              return existing && Object.values(existing);
             },
           }
         }
