@@ -6,6 +6,12 @@ import users from './users'
 type Args = {
   audience: string;
 }
+type Fellowship = "founders" | "angels" | "writers"
+type ContentConfig = {
+  'announcement'?: (Fellowship | "all")[],
+  'user'?: Fellowship[],
+  'project'?: Fellowship[]
+}
 
 /*
 Founders want to connect to angels and other founders.
@@ -13,7 +19,7 @@ Angels want to connect to founders and other angels.
 Founders and angels are interested in new founders' projects.
 Writers want to connect only to other writers and are not interested in founders' projects.
 */
-const audienceContent: Record<string, Record<string, string[]>> = {
+const audienceContent: Record<Fellowship, ContentConfig> = {
   'founders': {
     'announcement': ['all', 'founders'],
     'user': ['founders', 'angels'],
@@ -32,19 +38,19 @@ const audienceContent: Record<string, Record<string, string[]>> = {
 
 export default async function feed(parent: unknown, { audience }: Args): Promise<FeedEntry[]> {
   // todo add pagination
-  const content = audienceContent[audience]
+  const content = audienceContent[audience as Fellowship]
   if (!content) {
     throw new Error(`no available feed for ${audience}`)
   }
   const promises: Promise<FeedEntry[]>[] = []
-  if (content['user']) {
-    promises.push(users(parent, { fellowships: content['user'] }))
+  if (content.user) {
+    promises.push(users(parent, { fellowships: content.user }))
   }
-  if (content['announcement']) {
-    promises.push(announcements(parent, { fellowships: content['announcement'] }))
+  if (content.announcement) {
+    promises.push(announcements(parent, { fellowships: content.announcement }))
   }
-  if (content['project']) {
-    promises.push(projects(parent, { fellowships: content['project'] }))
+  if (content.project) {
+    promises.push(projects(parent, { fellowships: content.project }))
   }
   const entries = (await Promise.all(promises)).flat()
   return entries.sort((a, b) => b.created_ts.getTime() - a.created_ts.getTime())
