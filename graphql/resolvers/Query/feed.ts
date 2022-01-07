@@ -45,15 +45,17 @@ export default async function feed(parent: unknown, { audience, limit, cursor }:
     throw new Error(`no available feed for ${audience}`)
   }
   const promises: Promise<FeedEntry[]>[] = []
-  if (content.user) {
-    promises.push(users(parent, { fellowships: content.user, limit, cursor }))
-  }
+
   if (content.announcement) {
     promises.push(announcements(parent, { fellowships: content.announcement, limit, cursor }))
   }
   if (content.project) {
     promises.push(projects(parent, { fellowships: content.project, limit, cursor }))
   }
+  if (content.user) {
+    promises.push(users(parent, { fellowships: content.user, limit, cursor }))
+  }
+
   const entries = (await Promise.all(promises))
     .flat()
     .sort((a, b) => new Date(b.created_ts).getTime() - new Date(a.created_ts).getTime())
