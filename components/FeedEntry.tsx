@@ -28,7 +28,7 @@ export default function FeedEntry({ entry }: Props) {
 const entryBlock = (entry: t.FeedEntry) => {
   switch (entry.__typename) {
     case "Announcement":
-      return <FeedEntryAnnouncement announcement={entry as t.Annoucement} />
+      return <FeedEntryAnnouncement announcement={entry as t.Announcement} />
     case "User":
       return <FeedEntryUser user={entry as t.User} />
     case "Project":

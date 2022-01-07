@@ -1,6 +1,6 @@
-export type FeedEntry = { __typename: String } & (Annoucement | User | Project);
+export type FeedEntry = { __typename: String } & (Announcement | User | Project);
 
-export type Annoucement = {
+export type Announcement = {
   id: string;
   title: string;
   body: string;

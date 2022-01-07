@@ -2,7 +2,7 @@ import * as t from '../types/feed'
 import Markdown from './Markdown'
 
 type Props = {
-  announcement: t.Annoucement;
+  announcement: t.Announcement;
 }
 
 export default function FeedEntryAnnouncement({ announcement }: Props) {
