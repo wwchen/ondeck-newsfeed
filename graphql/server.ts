@@ -38,12 +38,12 @@ const typeDefs = gql`
 
   type Query {
     announcement(id: Int!): Announcement!
-    announcements(fellowships: [String!], limit: Int!, cursor: Date): [Announcement!]
+    announcements(fellowships: [String!], limit: Int! = 10, cursor: Date): [Announcement!]
     project(id: Int!): Project!
-    projects(fellowships: [String!], limit: Int!, cursor: Date): [Project!]
+    projects(fellowships: [String!], limit: Int! = 10, cursor: Date): [Project!]
     user(id: Int!): User!
-    users(fellowships: [String!], limit: Int!, cursor: Date): [User!]
-    feed(audience: String!, limit: Int!, cursor: Date): [FeedEntry!]
+    users(fellowships: [String!], limit: Int! = 10, cursor: Date): [User!]
+    feed(audience: String!, limit: Int! = 10, cursor: Date): [FeedEntry!]
   }
 `;
 
