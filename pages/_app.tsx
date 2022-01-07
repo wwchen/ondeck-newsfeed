@@ -23,7 +23,7 @@ const client = new ApolloClient({
       Query: {
         fields: {
           feed: {
-            keyArgs: ["__typename", "id"],
+            keyArgs: ["__typename", "id", "audience"],
             // While args.cursor may still be important for requesting
             // a given page, it no longer has any role to play in the
             // merge function.
