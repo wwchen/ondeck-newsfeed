@@ -1,63 +1,42 @@
 import { useRouter } from 'next/router'
 import { useQuery, gql } from '@apollo/client'
 import Layout from 'components/Layout'
-import UserCard from 'components/UserCard'
+import Feed from 'components/Feed'
+import * as t from 'types/feed'
 
 const FEED_QUERY = gql`
   query GetFeed($audience: String!) {
     feed(audience: $audience) {
       __typename
       ... on Announcement {
-        id
         title
         body
         fellowship
+        created_ts
       }
       ... on User {
-        id
         name
         bio
         fellowship
         avatar_url
+        created_ts
       }
       ... on Project {
-        id
         name
+        description
+        icon_url
+        created_ts
       }
     }
   }
 `
 
 type QueryData = {
-  feed: FeedEntry[];
+  feed: t.FeedEntry[];
 }
 
 type QueryVars = {
   audience: string;
-}
-
-type FeedEntry = { __typename: String } & (Annoucement | User | Project);
-
-type Annoucement = {
-  id: number;
-  title: string;
-  body: string;
-  fellowship: "fellows" | "angels" | "writers" | "all";
-}
-
-type User = {
-  id: number;
-  name: string;
-  bio: string;
-  fellowship: "fellows" | "angels" | "writers";
-  avatar_url: string;
-  projects: Project[];
-}
-
-type Project = {
-  id: number;
-  name: string;
-  icon_url: string;
 }
 
 export default function FeedPage() {
@@ -77,7 +56,7 @@ export default function FeedPage() {
 
   return (
     <Layout>
-      {users.map(user => <UserCard user={user} />)}
+      <Feed entries={feed} />
     </Layout>
   )
 }
