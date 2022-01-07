@@ -1,6 +1,7 @@
 import * as t from '../types/feed'
 import styled from 'styled-components'
 import Markdown from './Markdown'
+import Link from 'next/link'
 
 type Props = {
   user: t.User;
@@ -13,7 +14,7 @@ export default function FeedEntryUser({ user }: Props) {
         <Avatar src={user.avatar_url} />
       </ColumnLeft>
       <ColumnRight>
-        <h2>{user.name}</h2>
+        <h2><Link href={`/users/${user.id}`}>{user.name}</Link></h2>
         <p>Fellowship: {user.fellowship}</p>
         <Markdown>{user.bio}</Markdown>
       </ColumnRight>

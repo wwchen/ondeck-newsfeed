@@ -12,7 +12,5 @@ export default async function project(parent: unknown, { id }: Args): Promise<Pr
   if (!project) {
     throw new Error(`Project ${id} not found`)
   }
-  project.created_ts = new Date(project.created_ts)
-  project.updated_ts = new Date(project.updated_ts)
   return project
 }

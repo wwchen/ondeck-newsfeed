@@ -18,9 +18,5 @@ export default async function projects(parent: unknown, { fellowships, limit, cu
   if (!projects) {
     throw new Error(`projects not found`)
   }
-  projects.map(e => {
-    e.created_ts = new Date(e.created_ts)
-    e.updated_ts = new Date(e.updated_ts)
-  })
   return projects
 }

@@ -9,7 +9,9 @@ export default function FeedEntryAnnouncement({ announcement }: Props) {
   return (
     <div>
       <h2>{announcement.title}</h2>
-      <Markdown>{announcement.body}</Markdown>
+      <p>
+        <Markdown>{announcement.body}</Markdown>
+      </p>
     </div>
   )
 }

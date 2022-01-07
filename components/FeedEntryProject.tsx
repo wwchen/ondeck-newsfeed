@@ -1,6 +1,7 @@
 import * as t from '../types/feed'
 import styled from 'styled-components'
 import Markdown from './Markdown'
+import Link from 'next/link'
 
 type Props = {
   project: t.Project;
@@ -13,7 +14,7 @@ export default function FeedEntryProject({ project }: Props) {
         <Icon src={project.icon_url} />
       </ColumnLeft>
       <ColumnRight>
-        <h2>{project.name}</h2>
+        <h2><Link href={`/projects/${project.id}`}>{project.name}</Link></h2>
         <Markdown>{project.description}</Markdown>
       </ColumnRight>
     </Columns>

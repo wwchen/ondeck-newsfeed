@@ -14,9 +14,5 @@ export default async function announcements(parent: unknown, { fellowships, limi
   if (!announcements) {
     throw new Error(`Announcements not found`)
   }
-  announcements.map(e => {
-    e.created_ts = new Date(e.created_ts)
-    e.updated_ts = new Date(e.updated_ts)
-  })
   return announcements
 }

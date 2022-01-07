@@ -56,7 +56,7 @@ export default async function feed(parent: unknown, { audience, limit, cursor }:
   }
   const entries = (await Promise.all(promises))
     .flat()
-    .sort((a, b) => b.created_ts.getTime() - a.created_ts.getTime())
+    .sort((a, b) => new Date(b.created_ts).getTime() - new Date(a.created_ts).getTime())
     .slice(0, limit)
 
   return entries

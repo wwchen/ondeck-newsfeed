@@ -18,6 +18,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 const client = new ApolloClient({
   uri: '/api/graphql',
   cache: new InMemoryCache({
+    // https://www.apollographql.com/docs/react/pagination/cursor-based/
     typePolicies: {
       Query: {
         fields: {

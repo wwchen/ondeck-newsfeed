@@ -16,8 +16,8 @@ export default function Feed({ audience, entries, onLoadMore }: Props) {
       <h1>{capitalize(audience)} Feed</h1>
       {entries.map(e => <FeedEntry entry={e} />)}
 
-      <Button onClick={() => { onLoadMore() }} onScroll={() => { onLoadMore() }}>Load more</Button>
-    </FeedContainer>
+      <Button onClick={() => { onLoadMore() }}>Load more</Button>
+    </FeedContainer >
   )
 }
 

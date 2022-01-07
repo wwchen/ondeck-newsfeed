@@ -9,7 +9,11 @@ export default function Home() {
         <title>On Deck Newsfeed</title>
       </Head>
       <h1>Hello there!</h1>
-      <p>Your future newsfeed goes to this page. Or not, you decide 🤷</p>
+      <ul>
+        <li><Link href="/feed/founders">Founders feed</Link></li>
+        <li><Link href="/feed/angels">Angels feed</Link></li>
+        <li><Link href="/feed/writers">Writers feed</Link></li>
+      </ul>
       <span>Check out these pages:</span>
       <ul>
         <li>Project <Link href="/projects/10">Blue Onion Labs</Link></li>
